@@ -4,19 +4,17 @@ import psycopg2
 from config import config
 
 def create_tables():
-    """ create tables in the PostgreSQL database """
+    """ Creating tables in the PostgreSQL database. """
     commands = (
-        """
-        create table vendors(
+        """create table vendors(
             vendor_id serial primary key,
             vendor_name varchar(255) not null)
         """,
-        """ create table parts(
+        """create table parts(
                 part_id serial primary key,
                 part_name varchar(255) not null)
         """,
-        """
-        create table part_drawings(
+        """create table part_drawings(
                 part_id integer primary key,
                 file_extension varchar(5) not null,
                 drawing_data bytea not null,
@@ -25,8 +23,7 @@ def create_tables():
                 on update cascade
                 on delete cascade)
         """,
-        """
-        create table vendor_parts(
+        """create table vendor_parts(
                 vendor_id integer not null,
                 part_id integer not null,
                 primary key (vendor_id , part_id),
@@ -38,20 +35,20 @@ def create_tables():
                 references parts (part_id)
                 on update cascade
                 on delete cascade)
-        """)
+        """,)
     conn = None
     try:
-        # read the connection parameters
+        # Reading the connection parameters.
         params = config()
-        # connect to the PostgreSQL server
+        # Connecting to the PostgreSQL server.
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        # create table one by one
+        # Creating table one by one.
         for command in commands:
             cur.execute(command)
-        # close communication with the PostgreSQL database server
+        # Closing communication with the PostgreSQL database server.
         cur.close()
-        # commit the changes
+        # Committing the changes.
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)

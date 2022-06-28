@@ -1,16 +1,31 @@
+#!/usr/bin/python
+
 import psycopg2
+from config import config
 
-with psycopg2.connect(host='localhost', database='suppliers', user='postgres', password='as34df67jk90') as conn:
-        # create a cursor
-        cur = conn.cursor()
-        
-	    # execute a statement
+
+def test_connection() -> None:
+    """ This function just tests a connection with PostgreSQL server. """
+    try:
+        # Reading the connection parameters.
+        params = config()
+        # Trying to establish a connection between Python programme and a PostgreSQL server.
+        conn = psycopg2.connect(**params)
+        # Creating a cursor.
+        cur = conn.cursor()  
+        # Executing a statement.
         print('PostgreSQL database version: ', end='')
-        cur.execute('SELECT version()')
-
-        # display the PostgreSQL database server version
+        cur.execute('select version()')
+        # Displaying the PostgreSQL database server version.
         db_version = cur.fetchone()
         print(db_version)
-       
-	# close the communication with the PostgreSQL
+        # Closing the communication with the PostgreSQL.
         cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+if __name__ == '__main__':
+    test_connection()
