@@ -9,7 +9,7 @@ def config(filename: str = 'database.ini', section: str = 'postgresql') -> dict:
     parser = ConfigParser()
 
     # Reading the config file.
-    parser.read(filename)
+    parser.read('./Config/'+filename)
     
     # 
     db = {}
