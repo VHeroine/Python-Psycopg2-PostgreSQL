@@ -3,6 +3,7 @@
 import psycopg2
 from config import config
 
+
 def connect() -> None:
     """ Connecting to the PostgreSQL database server. """
     conn = None
@@ -20,8 +21,9 @@ def connect() -> None:
         # Displaying the PostgreSQL database server version.
         db_version = cur.fetchone()
         print(db_version)
-	    # Closing the communication with the PostgreSQL.
+        # Closing communication with the database.
         cur.close()
+        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:

@@ -3,6 +3,7 @@
 import psycopg2
 from config import config
 
+
 def create_tables():
     """ Creating tables in the PostgreSQL database. """
     commands = (
@@ -46,10 +47,11 @@ def create_tables():
         # Creating table one by one.
         for command in commands:
             cur.execute(command)
-        # Closing communication with the PostgreSQL database server.
-        cur.close()
-        # Committing the changes.
+        # Making the changes to the database persistent.
         conn.commit()
+        # Closing communication with the database.
+        cur.close()
+        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
