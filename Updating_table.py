@@ -3,7 +3,8 @@
 import psycopg2
 from config import config
 
-def update_vendor(vendor_id, vendor_name):
+
+def update_vendor(vendor_id, vendor_name) -> None:
     """Updating vendor name based on the vendor id."""
     sql = """update vendors
                 set vendor_name = %s
@@ -11,20 +12,21 @@ def update_vendor(vendor_id, vendor_name):
     conn = None
     updated_rows = 0
     try:
-        # read database configuration
+        # Reading database configuration.
         params = config()
-        # connect to the PostgreSQL database
+        # Connecting to the PostgreSQL database.
         conn = psycopg2.connect(**params)
-        # create a new cursor
+        # Creating a new cursor.
         cur = conn.cursor()
-        # execute the UPDATE  statement
+        # Executing the update statement.
         cur.execute(sql, (vendor_name, vendor_id))
-        # get the number of updated rows
+        # Getting the number of updated rows.
         updated_rows = cur.rowcount
-        # Commit the changes to the database
+        # Making the changes to the database persistent.
         conn.commit()
-        # Close communication with the PostgreSQL database
+        # Closing communication with the database.
         cur.close()
+        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -35,4 +37,4 @@ def update_vendor(vendor_id, vendor_name):
 
 if __name__ == '__main__':
     # Updating vendor id = 1
-    update_vendor(1, "3M Corp")
+    update_vendor(1, "3M Corp.")

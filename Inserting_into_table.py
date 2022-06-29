@@ -3,6 +3,7 @@
 import psycopg2
 from config import config
 
+
 def insert_vendor(vendor_name):
     """ Inserting a new vendor into the vendors table. """
     sql = "insert into vendors(vendor_name) values(%s) returning vendor_id;"
@@ -19,10 +20,11 @@ def insert_vendor(vendor_name):
         cur.execute(sql, (vendor_name,))
         # Getting the generated id back.
         vendor_id = cur.fetchone()[0]
-        # Committing the changes to the database.
+        # Making the changes to the database persistent.
         conn.commit()
         # Closing communication with the database.
         cur.close()
+        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -44,10 +46,11 @@ def insert_vendor_list(vendor_list):
         cur = conn.cursor()
         # Executing the insert statement.
         cur.executemany(sql,vendor_list)
-        # Committing the changes to the database.
+        # Making the changes to the database persistent.
         conn.commit()
         # Closing communication with the database.
         cur.close()
+        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
