@@ -12,8 +12,11 @@ def add_part(part_name: str, vendor_list: tuple) -> None:
     sql_assign_vendor = "insert into vendor_parts(vendor_id, part_id) values(%s, %s);"
     conn = None
     try:
+        # Reading database configuration.
         params = config()
+        # Connecting to the PostgreSQL database.
         conn = psycopg2.connect(**params)
+        # Creating a new cursor.
         cur = conn.cursor()
         # Inserting a new part.
         cur.execute(sql_insert_part, (part_name,))
