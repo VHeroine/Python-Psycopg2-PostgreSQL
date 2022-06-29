@@ -4,7 +4,7 @@ import psycopg2
 from config import config
 
 
-def add_part(part_name, vendor_list) -> None:
+def add_part(part_name: str, vendor_list: tuple) -> None:
     """ Inserting some data into tables. """
     # A statement for inserting a new row into the parts table.
     sql_insert_part = "insert into parts(part_name) values(%s) returning part_id;"
@@ -22,10 +22,11 @@ def add_part(part_name, vendor_list) -> None:
         # Assigning parts provided by vendors.
         for vendor_id in vendor_list:
             cur.execute(sql_assign_vendor, (vendor_id, part_id))
-        # Committing changes.
+        # Making the changes to the database persistent.
         conn.commit()
-        # Closing communication with the PostgreSQL database.
+        # Closing communication with the database.
         cur.close()
+        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
