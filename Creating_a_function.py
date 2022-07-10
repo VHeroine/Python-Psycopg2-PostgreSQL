@@ -13,13 +13,13 @@ def create_function(sql: str) -> None:
         conn = psycopg2.connect(**params)
         # Creating a new cursor.
         cur = conn.cursor()
-        # Inserting a new part.
+        # Executing the DLL statement.
         cur.execute(sql)
         # Making the changes to the database persistent.
         conn.commit()
         # Closing the cursor.
         cur.close()
-        print('Функция успешно создана.')
+        print('The function has been created successfully.')
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
