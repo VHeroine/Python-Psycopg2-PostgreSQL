@@ -3,23 +3,20 @@ import psycopg2
 from config import config
 
 
-def get_parts(vendor_id: int) -> None:
-    """Getting parts provided by a vendor specified by the vendor_id."""
+def add_part(part_name: str, vendor_name: str) -> None:
+    """Creating some new data by calling the procedure."""
     conn = None
     try:
         # Reading database configuration.
         params = config()
         # Connecting to the PostgreSQL database.
         conn = psycopg2.connect(**params)
-        # Creating a cursor object for execution
+        # Creating a cursor object for execution.
         cur = conn.cursor()
-        # Calling the function.
-        cur.callproc('get_parts_by_vendor', (vendor_id,))
-        # Processing the result set.
-        row = cur.fetchone()
-        while row is not None:
-            print(row)
-            row = cur.fetchone()
+        # Calling a stored procedure.
+        cur.execute('call add_new_part(%s, %s)', (part_name, vendor_name))
+        # Committing the transaction.
+        conn.commit()
         # Closing the cursor.
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
@@ -29,5 +26,6 @@ def get_parts(vendor_id: int) -> None:
             conn.close()
 
 if __name__ == '__main__':
-    param = input("Enter the provider ID: ")
-    get_parts(param)
+    part_name = input("Enter a part name: ")
+    vendor_name = input('Enter a vendor name: ')
+    add_part(part_name, vendor_name)
