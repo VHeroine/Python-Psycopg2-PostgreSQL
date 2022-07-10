@@ -21,9 +21,8 @@ def get_parts(vendor_id):
         while row is not None:
             print(f'ID = {row[0]}, part name = {row[1]}')
             row = cur.fetchone()
-        # Closing communication with the database.
+        # Closing the cursor.
         cur.close()
-        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:

@@ -24,9 +24,8 @@ def update_vendor(vendor_id, vendor_name) -> None:
         updated_rows = cur.rowcount
         # Making the changes to the database persistent.
         conn.commit()
-        # Closing communication with the database.
+        # Closing the cursor.
         cur.close()
-        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:

@@ -19,7 +19,7 @@ def test_connection() -> None:
         # Displaying the PostgreSQL database server version.
         db_version = cur.fetchone()
         print(db_version)
-        # Closing the communication with the PostgreSQL.
+        # Closing the cursor.
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)

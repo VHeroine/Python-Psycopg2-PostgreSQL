@@ -21,9 +21,8 @@ def connect() -> None:
         # Displaying the PostgreSQL database server version.
         db_version = cur.fetchone()
         print(db_version)
-        # Closing communication with the database.
+        # Closing the cursor.
         cur.close()
-        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:

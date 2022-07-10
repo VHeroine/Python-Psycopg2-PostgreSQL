@@ -49,9 +49,8 @@ def create_tables():
             cur.execute(command)
         # Making the changes to the database persistent.
         conn.commit()
-        # Closing communication with the database.
+        # Closing the cursor.
         cur.close()
-        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
