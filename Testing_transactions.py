@@ -27,9 +27,8 @@ def add_part(part_name: str, vendor_list: tuple) -> None:
             cur.execute(sql_assign_vendor, (vendor_id, part_id))
         # Making the changes to the database persistent.
         conn.commit()
-        # Closing communication with the database.
+        # Closing the cursor.
         cur.close()
-        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:

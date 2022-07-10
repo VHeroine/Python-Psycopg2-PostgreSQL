@@ -22,9 +22,8 @@ def insert_vendor(vendor_name):
         vendor_id = cur.fetchone()[0]
         # Making the changes to the database persistent.
         conn.commit()
-        # Closing communication with the database.
+        # Closing the cursor.
         cur.close()
-        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -48,9 +47,8 @@ def insert_vendor_list(vendor_list):
         cur.executemany(sql,vendor_list)
         # Making the changes to the database persistent.
         conn.commit()
-        # Closing communication with the database.
+        # Closing the cursor.
         cur.close()
-        conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
