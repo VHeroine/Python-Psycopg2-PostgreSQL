@@ -4,7 +4,7 @@ import psycopg2
 from config import config
 
 
-def create_function(sql: str) -> None:
+def create_procedure(sql: str) -> None:
     conn = None
     try:
         # Reading database configuration.
@@ -13,13 +13,13 @@ def create_function(sql: str) -> None:
         conn = psycopg2.connect(**params)
         # Creating a new cursor.
         cur = conn.cursor()
-        # Executing the DLL statement.
+        # Inserting a new part.
         cur.execute(sql)
         # Making the changes to the database persistent.
         conn.commit()
         # Closing the cursor.
         cur.close()
-        print('The function has been created successfully.')
+        print('The procedure has been created successfully.')
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -28,7 +28,7 @@ def create_function(sql: str) -> None:
 
 if __name__ == '__main__':
     # Opening the file and reading the DDL statement.
-    with open('Get_parts_by_vendor.sql', 'r') as f:
+    with open('Add_a_new_part.sql', 'r') as f:
         sql = f.read()
     # Calling the function executing the DDL statement.
-    create_function(sql)
+    create_procedure(sql)
