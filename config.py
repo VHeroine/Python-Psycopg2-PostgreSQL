@@ -1,9 +1,9 @@
 #!/usr/bin/python
-
 from configparser import ConfigParser
 
+
 def config(filename: str = 'database.ini', section: str = 'postgresql') -> dict:
-    """ Parsing database parameters. """
+    """Parsing database parameters."""
 
     # Creating a parser.
     parser = ConfigParser()
@@ -11,7 +11,7 @@ def config(filename: str = 'database.ini', section: str = 'postgresql') -> dict:
     # Reading the config file.
     parser.read('./Config/'+filename)
     
-    # 
+    # Parsing the config file and returning parameters.
     db = {}
     if parser.has_section(section):
         params = parser.items(section)
