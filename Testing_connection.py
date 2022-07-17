@@ -1,11 +1,10 @@
 #!/usr/bin/python
-
 import psycopg2
 from config import config
 
 
 def test_connection() -> None:
-    """ This function just tests a connection with PostgreSQL server. """
+    """This function just tests a connection with PostgreSQL server."""
     try:
         # Reading the connection parameters.
         params = config()
